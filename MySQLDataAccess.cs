@@ -41,6 +41,30 @@ public class MySQLDataAccess : IDataAccess
             return Enumerable.Empty<T>();
         }
     }
+
+    public async Task<IEnumerable<T>> SpQueryData<T, U>(string storedProcedure, U Parameters, string ConnectionStr = "")
+
+    {
+        using IDbConnection connection = new MySqlConnection(GetConnStr(ConnectionStr));
+
+        try
+        {
+            return await connection.QueryAsync<T>(storedProcedure, Parameters, commandType: CommandType.StoredProcedure);
+        }
+        catch (Exception e)
+        {
+            if (_logger != null)
+                _logger.Log(LogLevel.Error, e.Message);
+            return Enumerable.Empty<T>();
+        }
+    }
+
+    public async Task<IEnumerable<T>> SpQueryData<T>(string storedProcedure,  string ConnectionStr = "")
+
+    {
+       return await SpQueryData<T,dynamic> (storedProcedure, new { }, ConnectionStr);
+    }
+
     public IEnumerable<T> QueryData<T>(string sql, string ConnectionStr = "")
     {
         return QueryData<T, dynamic>(sql, new { }, ConnectionStr);
