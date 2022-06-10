@@ -59,10 +59,10 @@ public class MySQLDataAccess : IDataAccess
         }
     }
 
-    public async Task<IEnumerable<T>> SpQueryData<T>(string storedProcedure,  string ConnectionStr = "")
+    public async Task<IEnumerable<T>> SpQueryData<T>(string storedProcedure, string ConnectionStr = "")
 
     {
-       return await SpQueryData<T,dynamic> (storedProcedure, new { }, ConnectionStr);
+        return await SpQueryData<T, dynamic>(storedProcedure, new { }, ConnectionStr);
     }
 
     public IEnumerable<T> QueryData<T>(string sql, string ConnectionStr = "")
@@ -148,10 +148,15 @@ public class MySQLDataAccess : IDataAccess
     }
     public T QuerySingle<T>(string sql, string ConnectionStr = "")
     {
+        return QuerySingle<T, dynamic>(sql, new { }, ConnectionStr);
+    }
+
+    public T QuerySingle<T,U>(string sql, U parameter, string ConnectionStr = "")
+    {
         using IDbConnection connection = new MySqlConnection(GetConnStr(ConnectionStr));
         try
         {
-            return connection.QuerySingle<T>(sql);
+            return connection.QuerySingle<T>(sql, parameter);
         }
         catch (Exception e)
         {
@@ -314,4 +319,6 @@ public class MySQLDataAccess : IDataAccess
             return false;
         }
     }
+
+
 }

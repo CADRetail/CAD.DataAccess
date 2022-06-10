@@ -5,7 +5,7 @@ public interface IDataAccess
     string GetConnstr(string IP, string Db, string userName, string password);
     string GetConnStr(string ConnectionStr = "");
     bool PingHost(string nameOrAddress);
-    void Execute<T>(string sql, T parameter, string ConnectionStr = "");
+    void Execute<T>(string sql, T parameter, string ConnectionStr = ""); 
     Task ExecuteAsync<T>(string sql, T parameter, string ConnectionStr = "");
     void Execute(string sql, string ConnectionStr = "");
     Task ExecuteAsync(string sql, string ConnectionStr = "");
@@ -22,6 +22,7 @@ public interface IDataAccess
     T QueryScalar<T>(string sql, string ConnectionStr = "");
     Task<T> QueryScalarAsync<T>(string sql, string ConnectionStr = "");
     T QuerySingle<T>(string sql, string ConnectionStr = "");
+    T QuerySingle<T,U>(string sql, U parameter, string ConnectionStr = "");
     Task<T> QuerySingleAsync<T>(string sql, string ConnectionStr = "");
     Task<IEnumerable<T>> SpQueryData<T, U>(string storedProcedure, U Parameters, string ConnectionStr = "");
     Task<IEnumerable<T>> SpQueryData<T>(string storedProcedure, string ConnectionStr = "");
