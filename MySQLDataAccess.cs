@@ -166,6 +166,11 @@ public class MySQLDataAccess : IDataAccess
     }
     public async Task<T> QuerySingleAsync<T>(string sql, string ConnectionStr = "")
     {
+        return await QuerySingleAsync<T, dynamic>(sql, new { }, ConnectionStr);
+    }
+
+    public async Task<T> QuerySingleAsync<T, U>(string sql, U parameter, string ConnectionStr = "")
+    {
         using IDbConnection connection = new MySqlConnection(GetConnStr(ConnectionStr));
         try
         {

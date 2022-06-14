@@ -21,8 +21,9 @@ public interface IDataAccess
     Task<IEnumerable<T>> QueryDataAsync<T>(string sql, string ConnectionStr = "");
     T QueryScalar<T>(string sql, string ConnectionStr = "");
     Task<T> QueryScalarAsync<T>(string sql, string ConnectionStr = "");
+    Task<T> QuerySingleAsync<T, U>(string sql, U parameter, string ConnectionStr = "");
     T QuerySingle<T>(string sql, string ConnectionStr = "");
-    T QuerySingle<T,U>(string sql, U parameter, string ConnectionStr = "");
+    T QuerySingle<T, U>(string sql, U parameter, string ConnectionStr = "");
     Task<T> QuerySingleAsync<T>(string sql, string ConnectionStr = "");
     Task<IEnumerable<T>> SpQueryData<T, U>(string storedProcedure, U Parameters, string ConnectionStr = "");
     Task<IEnumerable<T>> SpQueryData<T>(string storedProcedure, string ConnectionStr = "");
